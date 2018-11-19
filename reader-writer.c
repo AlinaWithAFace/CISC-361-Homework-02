@@ -10,6 +10,8 @@
  * Can you show the existence of the starvation problem?
  */
 
+ // TODO: it's all broken burn it down
+
 //
 // Your code goes in the structure and functions below
 //
