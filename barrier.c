@@ -51,7 +51,7 @@ void barrier_init(barrier_t *b, int num_threads) {
     b->n = num_threads;
     b->count = 0;
     sem_init(&b->sem_mutex, 0, (unsigned int) 1);
-    sem_init(&b->sem_barrier, 0, (unsigned int) 0);
+    sem_init(&b->sem_barrier, 0, (unsigned int) 1);
 }
 
 /**

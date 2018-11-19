@@ -15,22 +15,52 @@
 //
 
 typedef struct __rwlock_t {
+
+    int reader_count;
+    sem_t sem_mutex;
+    sem_t sem_write;
+
 } rwlock_t;
 
 
 void rwlock_init(rwlock_t *rw) {
+
+    rw->reader_count = 0;
+    sem_init(&rw->sem_mutex, 0, (unsigned int) 1);
+    sem_init(&rw->sem_write, 0, (unsigned int) 1);
+
 }
 
 void rwlock_acquire_readlock(rwlock_t *rw) {
+
+    sem_wait(&rw->sem_mutex);
+    rw->reader_count++;
+    if (rw->reader_count == 1) {
+        sem_wait(&rw->sem_write);
+    }
+
+    sem_post(&rw->sem_mutex);
+
 }
 
 void rwlock_release_readlock(rwlock_t *rw) {
+
+    sem_wait(&rw->sem_mutex);
+    rw->reader_count--;
+    sem_post(&rw->sem_mutex);
+
 }
 
 void rwlock_acquire_writelock(rwlock_t *rw) {
+
+    sem_wait(&rw->sem_write);
+
 }
 
 void rwlock_release_writelock(rwlock_t *rw) {
+
+    sem_post(&rw->sem_write);
+
 }
 
 //
