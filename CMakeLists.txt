@@ -5,11 +5,15 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(.)
 
-add_executable(HW_Threads_RealSemaphores
-        barrier.c
-        common_threads.h
-        fork-join.c
-        mutex-nostarve.c
-        reader-writer-nostarve.c
-        reader-writer.c
+add_executable(fork-join
+        fork-join.c)
+
+add_executable(rendezvous
         rendezvous.c)
+
+add_executable(barrier
+        barrier.c)
+
+add_executable(reader-writer
+        reader-writer.c
+        common_threads.h)

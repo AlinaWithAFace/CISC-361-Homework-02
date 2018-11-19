@@ -5,6 +5,18 @@
 
 #include "common_threads.h"
 
+/**
+ * Now go one step further by implementing a general solution to **barrier synchronization**.
+ * Assume there are two points in a sequential piece of code, called *P1* and *P2*.
+ * Putting a **barrier** between *P1* and *P2* guarantees that all threads
+ * will execute *P1* before any one thread executes *P2*.
+ * Your task: write the code to implement a `barrier()` function that can be used in this manner.
+ * It is safe to assume you know *N* (the total number of threads in the running program) and
+ * that all *N* threads will try to enter the barrier.
+ * Again, you should likely use two semaphores to achieve the solution, and some other integers to count things.
+ * See `barrier.c` for details.
+ */
+
 // If done correctly, each child should print their "before" message
 // before either prints their "after" message. Test by adding sleep(1)
 // calls in various locations.
@@ -56,15 +68,15 @@ int main(int argc, char *argv[]) {
 
     printf("parent: begin\n");
     barrier_init(&b, num_threads);
-    
+
     int i;
     for (i = 0; i < num_threads; i++) {
-	t[i].thread_id = i;
-	Pthread_create(&p[i], NULL, child, &t[i]);
+        t[i].thread_id = i;
+        Pthread_create(&p[i], NULL, child, &t[i]);
     }
 
-    for (i = 0; i < num_threads; i++) 
-	Pthread_join(p[i], NULL);
+    for (i = 0; i < num_threads; i++)
+        Pthread_join(p[i], NULL);
 
     printf("parent: end\n");
     return 0;
